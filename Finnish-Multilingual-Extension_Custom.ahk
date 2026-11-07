@@ -12,7 +12,7 @@ Persistent
 ;
 ;  Version: v1.0.0
 ;
-;  Programmed by aallon-pituus in 2026.
+;  Programmed by aallonpituus in 2026.
 ;    
 ;  This extension is implemented through the AutoHotkey v2 program.
 ;
