@@ -9,11 +9,11 @@ The scripts install AutoHotkey, the extensions in itself and ask whether the use
 > That means they can possibly overwrite an AutoHotkey installation (if you already have it installed).
 #### The standard extended layout (SFS 5966:2019)
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://github.com/aallonpituus/Finnish-Multilingual-Extension/raw/refs/heads/main/installers/Install_Finnish-Multilingual-Extension_SFS_5966_2019.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/aallonpituus/Finnish-Multilingual-Extension/refs/heads/main/installers/Install_Finnish-Multilingual-Extension_SFS_5966_2019.ps1 | iex"
 ```
 #### The custom extended layout with cool features
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://github.com/aallonpituus/Finnish-Multilingual-Extension/raw/refs/heads/main/installers/Install_Finnish-Multilingual-Extension_Custom.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/aallonpituus/Finnish-Multilingual-Extension/refs/heads/main/installers/Install_Finnish-Multilingual-Extension_Custom.ps1 | iex"
 ```
 > [!NOTE]
 > **If you do not know which one to pick**, read more about what each one does in the "What does this project do?" section below.
