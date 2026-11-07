@@ -1,7 +1,7 @@
 Clear-Host
-Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  Finnish Multilingual Extension Installer  " -ForegroundColor Cyan
-Write-Host "============================================" -ForegroundColor Cyan
+Write-Host "===================================================" -ForegroundColor Cyan
+Write-Host "  Finnish Custom Multilingual Extension Installer  " -ForegroundColor Cyan
+Write-Host "===================================================" -ForegroundColor Cyan
 
 # 1. Check, Install, or Update AutoHotkey v2 via User Scope
 Write-Host "`n[+] Checking for AutoHotkey v2..." -ForegroundColor Cyan
@@ -19,7 +19,7 @@ if ($ahkCheck -match "AutoHotkey\.AutoHotkey") {
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 # 2. Download the AHK script to the user's Documents folder
-$URL = "https://github.com"
+$URL = "https://github.com/aallonpituus/Finnish-Multilingual-Extension/raw/refs/heads/main/Finnish-Multilingual-Extension_Custom.ahk"
 $DestinationFolder = Join-Path $env:USERPROFILE "Documents\Finnish-Multilingual-Extension"
 if (-not (Test-Path $DestinationFolder)) { New-Item -ItemType Directory -Path $DestinationFolder | Out-Null }
 $DestinationFile = Join-Path $DestinationFolder "Finnish-Multilingual-Extension_Custom.ahk"
@@ -59,7 +59,7 @@ Start-Process -FilePath $DestinationFile
 
 # 5. Final Friendly User Guide
 Write-Host "`n==========================================================================" -ForegroundColor Green
-Write-Host "Success! The Finnish Multilingual Extension is now running." -ForegroundColor Green
+Write-Host "Success! The Finnish Custom Multilingual Extension is now running." -ForegroundColor Green
 Write-Host "==========================================================================" -ForegroundColor Green
 Write-Host "• To start it in the future, just double-click the .ahk file in Documents." -ForegroundColor White
 Write-Host "• To close it, go to your system tray (bottom-right icons), double-click" -ForegroundColor White
