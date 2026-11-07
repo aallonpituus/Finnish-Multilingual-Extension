@@ -22,7 +22,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 $URL = "https://github.com/aallonpituus/Finnish-Multilingual-Extension/raw/refs/heads/main/Finnish-Multilingual-Extension_SFS_5966_2019.ahk"
 $DestinationFolder = Join-Path $env:USERPROFILE "Documents\Finnish-Multilingual-Extension"
 if (-not (Test-Path $DestinationFolder)) { New-Item -ItemType Directory -Path $DestinationFolder | Out-Null }
-$DestinationFile = Join-Path $DestinationFolder "Finnish-Multilingual-Extension_Custom.ahk"
+$DestinationFile = Join-Path $DestinationFolder "Finnish-Multilingual-Extension_SFS_5966_2019.ahk"
 
 Write-Host "`n[+] Downloading layout script..." -ForegroundColor Cyan
 Invoke-WebRequest -Uri $URL -OutFile $DestinationFile
