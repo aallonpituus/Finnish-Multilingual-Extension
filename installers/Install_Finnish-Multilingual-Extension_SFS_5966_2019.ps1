@@ -21,7 +21,7 @@ $AhkExe = Join-Path $env:LOCALAPPDATA "Programs\AutoHotkey\v2\AutoHotkey64.exe"
 if (-not (Test-Path $AhkExe)) { $AhkExe = "AutoHotkey64.exe" } # Fallback to path if custom structured
 
 # 2. Download the AHK script to the user's Documents folder
-$URL = "https://github.com"
+$URL = "https://raw.githubusercontent.com/aallonpituus/Finnish-Multilingual-Extension/main/Finnish-Multilingual-Extension_SFS_5966_2019.ahk"
 $DestinationFolder = Join-Path $env:USERPROFILE "Documents\Finnish-Multilingual-Extension"
 if (-not (Test-Path $DestinationFolder)) { New-Item -ItemType Directory -Path $DestinationFolder | Out-Null }
 $DestinationFile = Join-Path $DestinationFolder "Finnish-Multilingual-Extension_SFS_5966_2019.ahk"
