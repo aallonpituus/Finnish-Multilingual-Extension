@@ -1,0 +1,67 @@
+Clear-Host
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host "  Finnish Multilingual Extension Installer  " -ForegroundColor Cyan
+Write-Host "============================================" -ForegroundColor Cyan
+
+# 1. Check, Install, or Update AutoHotkey v2 via User Scope
+Write-Host "`n[+] Checking for AutoHotkey v2..." -ForegroundColor Cyan
+
+$ahkCheck = winget list --id AutoHotkey.AutoHotkey 2>$null
+if ($ahkCheck -match "AutoHotkey\.AutoHotkey") {
+    Write-Host "    AutoHotkey found. Ensuring it is up to date..." -ForegroundColor Green
+    winget upgrade --id AutoHotkey.AutoHotkey --scope user --silent --accept-source-agreements --accept-package-agreements > $null
+} else {
+    Write-Host "    AutoHotkey v2 not detected. Installing via WinGet (User Scope)..." -ForegroundColor Yellow
+    winget install --id AutoHotkey.AutoHotkey --scope user --silent --accept-source-agreements --accept-package-agreements
+}
+
+# Dynamically refresh path environment variables in case AHK was just installed
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+# 2. Download the AHK script to the user's Documents folder
+$URL = "https://github.com"
+$DestinationFolder = Join-Path $env:USERPROFILE "Documents\Finnish-Multilingual-Extension"
+if (-not (Test-Path $DestinationFolder)) { New-Item -ItemType Directory -Path $DestinationFolder | Out-Null }
+$DestinationFile = Join-Path $DestinationFolder "Finnish-Multilingual-Extension_Custom.ahk"
+
+Write-Host "`n[+] Downloading layout script..." -ForegroundColor Cyan
+Invoke-WebRequest -Uri $URL -OutFile $DestinationFile
+Write-Host "    Saved to: $DestinationFile" -ForegroundColor Green
+
+# 3. Handle Windows Startup preference (User space, no admin needed)
+$StartupFolder = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Windows\Start Menu\Programs\Startup")
+$ShortcutPath = Join-Path $StartupFolder "Finnish-Multilingual-Extension.lnk"
+
+Write-Host "`n[?] Do you want this extension to start automatically when Windows boots up?" -ForegroundColor Yellow
+$Choice = Read-Host "[Y]es / [N]o"
+
+if ($Choice -eq "Y" -or $Choice -eq "y") {
+    # Create shortcut in shell:startup pointing directly to the .ahk file
+    $WshShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WshShell.CreateShortcut($ShortcutPath)
+    $Shortcut.TargetPath = $DestinationFile
+    $Shortcut.Save()
+    Write-Host "    Added to Windows Startup successfully!" -ForegroundColor Green
+} else {
+    # If no, remove old shortcut if it exists, and show manual instructions
+    if (Test-Path $ShortcutPath) { Remove-Item $ShortcutPath -Force }
+    
+    Write-Host "`n[INFO] Auto-startup skipped." -ForegroundColor Magenta
+    Write-Host "You can set it up manually later if you change your mind:" -ForegroundColor White
+    Write-Host "1. Press Win + R, type 'shell:startup' and hit Enter."
+    Write-Host "2. Create a shortcut in that folder pointing directly to:"
+    Write-Host "   $DestinationFile" -ForegroundColor Gray
+}
+
+# 4. Launch the AutoHotkey script right now
+Write-Host "`n[+] Activating layout extension..." -ForegroundColor Cyan
+Start-Process -FilePath $DestinationFile
+
+# 5. Final Friendly User Guide
+Write-Host "`n==========================================================================" -ForegroundColor Green
+Write-Host "Success! The Finnish Multilingual Extension is now running." -ForegroundColor Green
+Write-Host "==========================================================================" -ForegroundColor Green
+Write-Host "• To start it in the future, just double-click the .ahk file in Documents." -ForegroundColor White
+Write-Host "• To close it, go to your system tray (bottom-right icons), double-click" -ForegroundColor White
+Write-Host "  the green AutoHotkey 'H' icon, and click 'Exit'." -ForegroundColor White
+Write-Host "==========================================================================" -ForegroundColor Green
